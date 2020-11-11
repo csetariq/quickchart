@@ -38,9 +38,11 @@ app.use(
 
 app.use(express.urlencoded());
 
-app.use(morgan('combined', { 
-  stream: accessLogStream,
-  skip: (req, res) => {
+app.use(morgan(
+  ':remote-addr - :remote-user [:date[clf]] ":method :url HTTP/:http-version" :status :res[content-length] ":referrer" ":user-agent" :response-time ms', 
+  { 
+    stream: accessLogStream,
+    skip: (req, res) => {
       return req.path === '/healthcheck';
   }
 }));
